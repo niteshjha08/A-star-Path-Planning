@@ -93,6 +93,7 @@ def visualize(search_state,frame_skip):
 def backtrack(search_state):
     print("Backtracking now!")
     end_goal_location = list(search_state.closed.keys())[-1]
+    print("final goal location: ", end_goal_location)
     cv2.circle(search_state.map_arr,(end_goal_location[1],end_goal_location[0]),5,(0,0,255),-1)
     search_state.map_arr[end_goal_location[0], end_goal_location[1]] = [0,0,255]
     end_goal_values = search_state.closed[end_goal_location]
@@ -167,8 +168,8 @@ def check_direction(search_state, robot, curr_node_location,curr_node_values,del
         search_state.visited_costs.put((curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location),\
             [check_location,curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location),\
                                                  search_state.node_count, curr_node_values[1]]))
-        search_state.closed[check_location] = [curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location),\
-                                                 search_state.node_count, curr_node_values[1]]
+        # search_state.closed[check_location] = [curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location),\
+        #                                          search_state.node_count, curr_node_values[1]]
         # file_nodes.write(str(check_location) + str([curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location),\
                                                 #  search_state.node_count, curr_node_values[1]]) + "\n")
 
@@ -179,9 +180,10 @@ def check_direction(search_state, robot, curr_node_location,curr_node_values,del
         # print('check_res inside:',check_res is np.inf)
         if check_res > curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location):
             print("updating existing cost")
+            exit()
             search_state.visited[check_location][0] = curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location)
             search_state.visited[check_location][2] = curr_node_values[1]            
-            search_state.closed[check_location][0] = curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location)
+            # search_state.closed[check_location][0] = curr_node_values[0] + 5 + get_cost_to_go((check_location[0],check_location[1]),search_state.goal_location)-get_cost_to_go((curr_node_location[0],curr_node_location[1]),search_state.goal_location)
             search_state.closed[check_location][2] = curr_node_values[1]            
 
 # file_nodes = open("nodes.txt","w")
@@ -233,6 +235,8 @@ def astar_search(search_state, robot, visualize_search):
         # file_nodes.write(str(curr_node_location) + "\n")
         robot.update_position(curr_node_location[0],curr_node_location[1],curr_node_location[2])
         curr_node_values = [next_vals[1][1],next_vals[1][2],next_vals[1][3]]
+        # print(curr_node_values)
+        # exit()
         if(status_update_count==1000):
             time_end = time.time()
             print("time_taken for 1000 pops:",time_end - time_start)
@@ -252,7 +256,7 @@ def astar_search(search_state, robot, visualize_search):
 
     # Visualization
     if visualize_search:
-        visualize(search_state,frame_skip=50)
+        visualize(search_state,frame_skip=200)
 
 
 
