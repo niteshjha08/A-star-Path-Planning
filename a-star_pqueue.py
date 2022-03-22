@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+from re import search
 import numpy as np
 from generate_map_double import define_obstacle_space
 import cv2
@@ -72,19 +73,23 @@ def visualize(search_state,frame_skip):
     first_pass = True
     for location in search_state.closed:
         frame +=1
-        search_state.map_arr[location[0],location[1]] = [0,255,0]
+        # search_state.map_arr[location[0],location[1]] = [0,255,0]
+        # print(parent_location)
         if not first_pass:
-            
-            _,(p2_y ,p2_x , _) = search_state.associations[search_state.visited[location][1]]
-            p1_x,p1_y = last_location
-            # print(last_location,p2_x,p2_y)
-            cv2.line(search_state.map_arr, last_location,[p2_x,p2_y], [0,255,0], 1)
+            parent_location = search_state.associations[search_state.closed[location][2]][1]
+
+            # print("line bw:",(location[1],location[0]),(parent_location[1],parent_location[0]))
+            cv2.line(search_state.map_arr,(location[1],location[0]),(parent_location[1],parent_location[0]),(0,255,0),1)
+        #     _,(p2_y ,p2_x , _) = search_state.associations[search_state.visited[location][1]]
+        # p1_x,p1_y = last_location
+        # print(last_location,p2_x,p2_y)
+        # cv2.line(search_state.map_arr, last_location,[p2_x,p2_y], [0,255,0], 1)
 
         if frame % frame_skip ==0:
             cv2.imshow('map_arr',search_state.map_arr)
             cv2.waitKey(1)
         first_pass = False
-        last_location = (location[1],location[0])
+        # last_location = (location[1],location[0])
         
     # cv2.waitKey(0)
     backtrack(search_state)
@@ -213,14 +218,12 @@ def astar_search(search_state, robot, visualize_search):
 
     # Visualization
     if visualize_search:
-        visualize(search_state,frame_skip=200)
+        visualize(search_state,frame_skip=50)
 
 
 
 def main():
     map_arr = define_obstacle_space()
-    # start_location = (random.randint(0,250)+1,random.randint(1,400)+1,0)
-    # goal_location = (random.randint(0,250)+1,random.randint(1,400)+1,0)
 
     Parser = argparse.ArgumentParser()
     Parser.add_argument('--start_location_x', default="30", help='x coordinate of the start location, Default: 50')
