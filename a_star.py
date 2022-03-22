@@ -204,7 +204,7 @@ def astar_search(search_state, robot, visualize_search):
 
     # Visualization
     if visualize_search:
-        visualize(search_state,frame_skip=300)
+        visualize(search_state,frame_skip=50)
 
 
 
