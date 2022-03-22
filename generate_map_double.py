@@ -1,8 +1,7 @@
 #!/usr/bin/python3
 import numpy as np
 import cv2
-import matplotlib.pyplot as plt
-from sqlalchemy import false
+
 
 # Define a line dividing map array in two parts, color one in white, other in black
 def half_plane(map_arr,pt1,pt2,right_side_color=True):
