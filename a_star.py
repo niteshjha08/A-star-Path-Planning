@@ -212,10 +212,10 @@ def main():
     map_arr = define_obstacle_space()
 
     Parser = argparse.ArgumentParser()
-    Parser.add_argument('--start_location_x', default="30", help='x coordinate of the start location, Default: 50')
-    Parser.add_argument('--start_location_y', default="30", help='y coordinate of the start location, Default: 150')
+    Parser.add_argument('--start_location_x', default="30", help='x coordinate of the start location, Default: 30')
+    Parser.add_argument('--start_location_y', default="30", help='y coordinate of the start location, Default: 30')
     Parser.add_argument('--goal_location_x', default="200", help='x coordinate of the goal location, Default: 200')
-    Parser.add_argument('--goal_location_y', default="200", help='y coordinate of the goal location, Default: 300')
+    Parser.add_argument('--goal_location_y', default="200", help='y coordinate of the goal location, Default: 200')
     Parser.add_argument('--clearance', default="5", help='clearance og the robot, Default: 5')
     Parser.add_argument('--step_size', default="5", help='step size of the robot, Default: 5')
     Parser.add_argument('--radius', default="10", help='radius of the robot, Default: 10')

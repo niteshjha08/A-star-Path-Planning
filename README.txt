@@ -10,5 +10,7 @@ Team:
 Sri Sai Charan Velisetti (117509755)
 Nitesh Jha (117525366)
 
+Github URL: https://github.com/niteshjha08/A-star-Path-Planning
+
 
 
